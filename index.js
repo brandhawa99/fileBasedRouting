@@ -12,8 +12,7 @@ app.all("/*", async(req, res) => {
   console.log(fileUrl);
   const isFile = fs.existsSync(fileUrl + '.js')
   if (!isFile){
-    res.status(404).send("File not found");
-    return;
+
   }
 
 
