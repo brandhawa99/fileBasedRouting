@@ -11,9 +11,13 @@ app.all("/*", async(req, res) => {
   const fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
   console.log(fileUrl);
   const isFile = fs.existsSync(fileUrl + '.js')
-  if (!isFile){
 
+  if (!isFile){
+    fileUrl += "/index.js"
+  }else{
+    fileUrl += ".js"
   }
+  
 
 
 });
