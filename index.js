@@ -8,17 +8,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.all("/*", async(req, res) => {
-  const fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
+  let fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
   console.log(fileUrl);
-  const isFile = fs.existsSync(fileUrl + '.js')
+  let isFile = fs.existsSync(fileUrl + '.js')
 
   if (!isFile){
     fileUrl += "/index.js"
   }else{
     fileUrl += ".js"
   }
-  
 
+  console.log(fileUrl)
 
 });
 
