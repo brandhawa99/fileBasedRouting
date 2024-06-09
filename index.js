@@ -7,6 +7,16 @@ const ROOT_FOLDER = './approutes/';
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+async function handleRegularRoutes(fileUrl, req ,res){
+  try {
+   const module = await import(fileUrl) 
+   
+  } catch (error) {
+   console.log(error) 
+   res.statusCode = 404;
+  }
+}
+
 app.all("/*", async(req, res) => {
   let fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
   console.log(fileUrl);
@@ -19,6 +29,14 @@ app.all("/*", async(req, res) => {
   }
 
   console.log(fileUrl)
+
+  let result = await handleRegularRoutes(fileUrl, req,res);
+
+  if(res === false){
+    return res.send("Route not found")
+  }else{
+    return res.send(result)
+  }
 
 });
 
