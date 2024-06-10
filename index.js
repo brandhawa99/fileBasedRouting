@@ -9,8 +9,9 @@ app.use(express.urlencoded({ extended: true }));
 
 async function handleRegularRoutes(fileUrl, req ,res){
   try {
-   const module = await import(fileUrl) 
+   const module = await import(fileUrl);
    
+
   } catch (error) {
    console.log(error) 
    res.statusCode = 404;
