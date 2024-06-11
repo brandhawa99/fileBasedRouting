@@ -9,12 +9,16 @@ app.use(express.urlencoded({ extended: true }));
 
 async function handleRegularRoutes(fileUrl, req ,res){
   try {
-   const module = await import(fileUrl);
-   
+    const module = await import(fileUrl);
+    let data = null;
+    console.log("HTTP VERB: ",req.method)
+    data = module.handler(req,res);
 
+    return data
   } catch (error) {
-   console.log(error) 
-   res.statusCode = 404;
+    console.log(error) 
+    res.statusCode = 404;
+    return false;
   }
 }
 
