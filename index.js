@@ -11,9 +11,12 @@ async function handleRegularRoutes(fileUrl, req ,res){
   try {
     const module = await import(fileUrl);
     let data = null;
-    console.log("HTTP VERB: ",req.method)
-    data = module.handler(req,res);
-
+    const httpVerb = req.method.toLowerCase()
+    if(module[httpVerb]){
+      data = module[httpVerb](req,res);
+    }else{
+      data = module.handler(req,res);
+    }
     return data
   } catch (error) {
     console.log(error) 
@@ -25,6 +28,7 @@ async function handleRegularRoutes(fileUrl, req ,res){
 app.all("/*", async(req, res) => {
   let fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
   console.log(fileUrl);
+
   let isFile = fs.existsSync(fileUrl + '.js')
 
   if (!isFile){
@@ -35,9 +39,9 @@ app.all("/*", async(req, res) => {
 
   console.log(fileUrl)
 
-  let result = await handleRegularRoutes(fileUrl, req,res);
+  let result = await handleRegularRoutes(fileUrl, req, res);
 
-  if(res === false){
+  if(result === false){
     return res.send("Route not found")
   }else{
     return res.send(result)
