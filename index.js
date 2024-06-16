@@ -25,6 +25,23 @@ async function handleRegularRoutes(fileUrl, req ,res){
   }
 }
 
+async function handleDynamicRoutes(folder){
+  try {
+    const files = fs.promises.readdir(folder);
+    const dynamicFileName = await files.find( fname => {
+      return fname.match(/\[[a-zA-Z0-9\._]+\]/)
+    })
+    return {
+      file : dynamicFileName,
+      param : dynamicFileName.replace("[","").reaplce("].js","")
+    }
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+
+}
+
 app.all("/*", async(req, res) => {
   let fileUrl  = (ROOT_FOLDER + req.url).replace("//", "/");
   console.log(fileUrl);
