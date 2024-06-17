@@ -33,7 +33,7 @@ async function handleDynamicRoutes(folder){
     })
     return {
       file : dynamicFileName,
-      param : dynamicFileName.replace("[","").reaplce("].js","")
+      param : dynamicFileName.replace("[","").replace("].js","")
     }
   } catch (error) {
     console.log(error)
@@ -56,10 +56,13 @@ app.all("/*", async(req, res) => {
 
   console.log(fileUrl)
 
+
+
   let result = await handleRegularRoutes(fileUrl, req, res);
 
   if(result === false){
-    return res.send("Route not found")
+    // return res.send("Route not found")
+    
   }else{
     return res.send(result)
   }
