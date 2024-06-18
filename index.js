@@ -61,8 +61,10 @@ app.all("/*", async(req, res) => {
   let result = await handleRegularRoutes(fileUrl, req, res);
 
   if(result === false){
+    const pathArray  = (ROOT_FOLDER + req.url).replace('//','/').split('/');
+    console.log(pathArray)
     // return res.send("Route not found")
-    
+
   }else{
     return res.send(result)
   }
