@@ -63,6 +63,7 @@ app.all("/*", async(req, res) => {
   if(result === false){
     const pathArray  = (ROOT_FOLDER + req.url).replace('//','/').split('/');
     console.log(pathArray)
+    const lastElement = pathArray.pop();
     // return res.send("Route not found")
 
   }else{
