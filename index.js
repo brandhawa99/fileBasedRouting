@@ -64,7 +64,8 @@ app.all("/*", async(req, res) => {
     const pathArray  = (ROOT_FOLDER + req.url).replace('//','/').split('/');
     console.log(pathArray)
     const lastElement = pathArray.pop();
-    const folderToCheck = pathArray.join("/")    
+    const folderToCheck = pathArray.join("/")   
+    const dynamicHandler = await handleDynamicRoutes(folderToCheck)
 
     // return res.send("Route not found")
 
