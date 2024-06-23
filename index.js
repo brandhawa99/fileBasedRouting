@@ -67,7 +67,11 @@ app.all("/*", async(req, res) => {
     const folderToCheck = pathArray.join("/")   
     const dynamicHandler = await handleDynamicRoutes(folderToCheck)
 
+
     // return res.send("Route not found")
+    if(!dynamicHandler){
+      return res.send("Route not found")
+    }
 
   }else{
     return res.send(result)
