@@ -27,7 +27,7 @@ async function handleRegularRoutes(fileUrl, req ,res){
 
 async function handleDynamicRoutes(folder){
   try {
-    const files = fs.promises.readdir(folder);
+    const files = await fs.promises.readdir(folder);
     const dynamicFileName = await files.find( fname => {
       return fname.match(/\[[a-zA-Z0-9\._]+\]/)
     })
@@ -73,6 +73,12 @@ app.all("/*", async(req, res) => {
       return res.send("Route not found")
     }
 
+    req.params = {...req.params, [dynamicHandler.param]: lastElement}
+    console.log([folderToCheck,dynamicHandler.file].join('/'));
+    console.log(req.params)
+    result = await handleRegularRoutes([folderToCheck,dynamicHandler.file].join("/"),req,res);
+    console.log(result)
+    res.send(result)
   }else{
     return res.send(result)
   }
